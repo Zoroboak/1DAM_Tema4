@@ -248,7 +248,7 @@ public class Sopa_de_Letras {
 		//ori[0]
 		//ori[1]
 		
-		//switch(
+		//switch(s
 		
 		
 		
