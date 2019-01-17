@@ -23,7 +23,15 @@ public class Sopa_de_Letras {
 
 	
 	//Atributos Globales
+	//Matriz con los valores de la sopa de letras
 	public static char matriz[][] = new char[15][15];
+	//Matriz segundaria de validación
+	public static boolean bmatriz[][] = new boolean[15][15];
+
+	
+	
+	
+	
 	
 	//Metodo: pedirle datos al usuario
 	public static String getDato(String text,int parametro) {
@@ -167,6 +175,113 @@ public class Sopa_de_Letras {
 		return auxsa;
 	}
 	
+	//Metodo que organiza las palabras de mayor a menor en un array de strings
+	public static String[] mayorAMenor(String[] palabras) {
+		
+		//Variable local
+		String aux = "0"; //variable auxiliar
+		
+		for(int i=0;i<(palabras.length-1);i++){
+            for(int j=i+1;j<palabras.length;j++){
+                if(palabras[i].compareToIgnoreCase(palabras[j])<0){
+                    //Intercambiamos valores
+                    aux=palabras[i];
+                    palabras[i]=palabras[j];
+                    palabras[j]=aux;
+
+                }
+            }
+        }
+		
+		return palabras;
+	}
+	
+	//Metodo que obtiene una orientación aleatoria
+	public static int[] orientación() {
+		
+		//Variables locales
+		int[] auxa = {0,0};
+		
+		//Decidir orientación, 0 derecha a isquierda, 1 isquierda a derecha
+		auxa[0]=getAleatorio(0,1);
+		
+		//Decidir posición, 0 vertical, 1 diagonal(X), 2 horizontal, 3 diagonal(Y)
+		auxa[1]=getAleatorio(0,3);
+		
+		//devolver resultados 
+		return auxa;
+		
+	}
+	
+	//Metodo que coloca la palabra que le pasemos
+	public static void colocarPalabra(String palabra) {
+		
+		//variables locales
+		int[] pos = new int [2]; //Almacena posicion
+		int[] ori; //Almacena orientación
+		
+		
+		
+		//Recorremos la segunda matriz y marcamos las palabras libres y las ocupadas
+		for (int i = 0; i < bmatriz.length; i++) {
+			for (int j = 0; j < bmatriz.length; j++) {
+				if (matriz[i][j]=='-') {
+					//Si la cuadricula esta vacia, entonces no estara ocupada
+					bmatriz[i][j]=false;
+				}else {//Si la matriz tiene algo, entonces estara ocupada
+					bmatriz[i][j]=true;
+				}
+			}
+			
+		}
+		
+		//Vemos donde vamos a colocar la palabra y con que orientación
+		pos[0]=getAleatorio(0,14);
+		pos[1]=getAleatorio(0,14);
+		//ori[0] = Decidir orientación, 0 derecha a isquierda, 1 isquierda a derecha
+		//ori[1] = Decidir posición, 0 vertical, 1 diagonal(X), 2 horizontal, 3 diagonal(Y)
+		ori = orientación();
+		
+		//Comprobamos si hay espacio para colocar nuestra palabra
+		int espaciolibre;
+		//matriz[pos[0]][pos[1]];
+		//ori[0]
+		//ori[1]
+		
+		//switch(
+		
+		
+		
+	}
+	
+	//Metodo que contiene el flujo del juego
+	public static void juego() {
+		
+		//Variables globales
+		String[] palabras = new String [10];
+		
+		
+		
+		//recorrer la matriz con valor "nulo"(-)
+		for (int i = 0; i < matriz.length; i++) {
+			for (int j = 0; j < matriz.length; j++) {
+				matriz[i][j] = '-';
+			}
+		}
+		
+		
+		//Pedir y guardar las 10 palabras de forma ordenada (Las más grande primero)
+		palabras = mayorAMenor(get10Palabras());
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	
 	//Metodo Principal a Ejecutar
 	public static void main(String[] args) {
 		/*
@@ -213,11 +328,8 @@ public class Sopa_de_Letras {
 			switch(aux) {
 			case 1: //1.- Iniciar Juego 
 				
-				auxsa = get10Palabras();
+				juego();
 				
-				for (int i = 0; i < 10; i++) {
-					System.out.println(auxsa[i]);
-				}
 				
 				break;
 			case 2: //2.- Nivel de Dificultad 
@@ -225,7 +337,21 @@ public class Sopa_de_Letras {
 			
 				break;
 			case 3: //3.- Sobre el juego    
-			
+				
+				
+				System.out.println("Pedro Daniel Pérez Sánchez");
+				System.out.println();
+				
+				System.out.println("La sopa de letras es un juego que consiste en descubrir un número determinado");
+				System.out.println("de palabras enlazando estas letras de forma horizontal, vertical o diagonal y");
+				System.out.println("en cualquier sentido, tanto de derecha a izquierda como de izquierda a ");
+				System.out.println("derecha, y tanto de arriba abajo, como de abajo arriba. En el juego vienen ");
+				System.out.println("algunas instrucciones o pistas de como encontrar las palabras en todo caso");
+				System.out.println("puede venir un listado de palabras las cuales tienes que encontrar.");
+				System.out.println();
+				
+				
+				
 				break;
 			case 4: // 4. - SALIR DEL PROGRAMA
 				System.out.println();
