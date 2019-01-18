@@ -1,6 +1,7 @@
 package Trabajos;
 
 import java.util.Scanner;
+import java.io.EOFException;
 import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Set;
@@ -9,7 +10,7 @@ import java.util.Set;
  * Programa: Sopa_de_Letras
  * 
  *           
- * Autor: Pedro Daniel Pérez Sánchezggw
+ * Autor: Pedro Daniel Pérez Sánchez
  *
  * Fecha: 08/01/2019
  *
@@ -31,6 +32,31 @@ public class Sopa_de_Letras {
 	
 	
 	
+	//Metodo para mostrar la matriz
+	public static void mostrarMatriz() {
+		//Mostrar Matriz en consola
+		for (int i = 0; i < matriz.length; i++) {
+			for (int j = 0; j < matriz.length; j++) {
+				System.out.print(matriz[i][j]);
+				System.out.print(" ");
+			}
+			System.out.println();
+		}
+		
+	}
+	
+	//Metodo para crear letras aleatorias 
+	public static void generarLetras() {
+		//Mostrar Matriz en consola
+		for (int i = 0; i < matriz.length; i++) {
+			for (int j = 0; j < matriz.length; j++) {
+				if(matriz[i][j]=='-') {
+					matriz[i][j] = (char) getAleatorio(65,90);
+				}
+			}
+		}
+		
+	}
 	
 	
 	//Metodo: pedirle datos al usuario
@@ -112,6 +138,9 @@ public class Sopa_de_Letras {
 		
 		}
 		
+		//Paso palabra a mayusculas
+		auxs.toUpperCase();
+		
 		//Devuelvo un String
 		return auxs;
 	}
@@ -154,7 +183,7 @@ public class Sopa_de_Letras {
 				//Pongo el flag del while a true
 				v=true;
 				
-				auxsa[i]=getDato("Introduce la "+(i+1)+"º palabra",2);
+				auxsa[i]=getDato("Introduce la "+(i+1)+"º palabra diferente entre 3 y 15 caracteres",2);
 				
 				if(i>0) {
 				for (int j = i; j > 0; j--) {
@@ -219,8 +248,12 @@ public class Sopa_de_Letras {
 		//variables locales
 		int[] pos = new int [2]; //Almacena posicion
 		int[] ori; //Almacena orientación
+		boolean v = true; //flag auxiliar
+		boolean posv = false; //flag posición valida
 		
 		
+		//Creamos una copia de la matriz para reestablecerla si hace falta
+		char[][] copiamatriz = matriz;
 		
 		//Recorremos la segunda matriz y marcamos las palabras libres y las ocupadas
 		for (int i = 0; i < bmatriz.length; i++) {
@@ -245,10 +278,232 @@ public class Sopa_de_Letras {
 		//Comprobamos si hay espacio para colocar nuestra palabra
 		int espaciolibre;
 		//matriz[pos[0]][pos[1]];
-		//ori[0]
-		//ori[1]
+		//ori[0] Orientación
+		//ori[1] Posición
 		
-		//switch(s
+		switch(ori[1]) {
+		case 0: //Si posición es vertical
+			
+			do {
+				v = true; //flag a positivo
+				
+				if(ori[0]==0) {//Comprobar palabra de arriba a abajo
+					try {
+						for (int i = 0; i < palabra.length(); i++) {
+							if(matriz[(pos[0]+i)][pos[1]]!='-') {
+								//Espacio ocupado
+								v = false;
+							}else {
+								//Si esta libre, aprovechamos el for y colocamos la letra de la palabra
+								matriz[(pos[0]+i)][pos[1]] = palabra.charAt(i);
+							}
+						}
+					} catch(Exception e){
+						//Si nos salimos de la matriz, no hay espacio
+						v = false;
+						//Restablecemos la matriz
+						matriz = copiamatriz;
+					}
+				}else if(ori[0]==1){//comprobar palabra de abajo a arriba
+					try {
+						for (int i = 0; i < palabra.length(); i++) {
+							if(matriz[(pos[0]-i)][pos[1]]!='-') {
+								//Espacio ocupado
+								v = false;
+							}else {
+								//Si esta libre, aprovechamos el for y colocamos la letra de la palabra
+								matriz[(pos[0]-i)][pos[1]] = palabra.charAt(i);
+							}
+						}
+					} catch(Exception e){
+						//Si nos salimos de la matriz, no hay espacio
+						v = false;
+						//Restablecemos la matriz
+						matriz = copiamatriz;
+					}
+					
+				}
+				
+				if(v=false) { //Si no hay espacio, vuelve a generar una posición hasta que haya espacio
+					pos[0]=getAleatorio(0,14);
+					pos[1]=getAleatorio(0,14);
+				}
+				
+			}while(!v);
+			
+			//declarar que la posición es valida
+			posv = true;
+			
+			break;
+		case 1: //Si posición es diagonal(x)
+			
+			do {
+				v = true; //flag a positivo
+				
+				if(ori[0]==0) {//Comprobar palabra de arriba a abajo (Diagonal x)
+					try {
+						for (int i = 0; i < palabra.length(); i++) {
+							if(matriz[(pos[0]+i)][pos[1]+i]!='-') {
+								//Espacio ocupado
+								v = false;
+							}else {
+								//Si esta libre, aprovechamos el for y colocamos la letra de la palabra
+								matriz[(pos[0]+i)][pos[1]+i] = palabra.charAt(i);
+							}
+							
+						}
+					} catch(Exception e){
+						//Si nos salimos de la matriz, no hay espacio
+						v = false;
+						//Restablecemos la matriz
+						matriz = copiamatriz;
+					}
+				}else if(ori[0]==1){//comprobar palabra de abajo a arriba (Diagonal x)
+					try {
+						for (int i = 0; i < palabra.length(); i++) {
+							if(matriz[(pos[0]-i)][pos[1]-i]!='-') {
+								//Espacio ocupado
+								v = false;
+							}else {
+								//Si esta libre, aprovechamos el for y colocamos la letra de la palabra
+								matriz[(pos[0]-i)][pos[1]-i] = palabra.charAt(i);
+							}
+						}
+					} catch(Exception e){
+						//Si nos salimos de la matriz, no hay espacio
+						v = false;
+						//Restablecemos la matriz
+						matriz = copiamatriz;
+					}
+					
+				}
+				
+				if(v=false) { //Si no hay espacio, vuelve a generar una posición hasta que haya espacio
+					pos[0]=getAleatorio(0,14);
+					pos[1]=getAleatorio(0,14);
+				}
+				
+			}while(!v);
+			
+			//declarar que la posición es valida
+			posv = true;
+			
+			
+			break;
+		case 2: //Si posición es horizontal
+			
+			do {
+				v = true; //flag a positivo
+				
+				if(ori[0]==0) {//Comprobar palabra de derecha a isquierda
+					try {
+						for (int i = 0; i < palabra.length(); i++) {
+							if(matriz[(pos[0])][pos[1]+i]!='-') {
+								//Espacio ocupado
+								v = false;
+							}else {
+								//Si esta libre, aprovechamos el for y colocamos la letra de la palabra
+								matriz[(pos[0])][pos[1]+i] = palabra.charAt(i);
+							}
+						}
+					} catch(Exception e){
+						//Si nos salimos de la matriz, no hay espacio
+						v = false;
+						//Restablecemos la matriz
+						matriz = copiamatriz;
+					}
+					
+				}else if(ori[0]==1){//comprobar palabra de abajo a arriba
+					try {
+						for (int i = 0; i < palabra.length(); i++) {
+							if(matriz[(pos[0])][pos[1]-i]!='-') {
+								//Espacio ocupado
+								v = false;
+							}else {
+								//Si esta libre, aprovechamos el for y colocamos la letra de la palabra
+								matriz[(pos[0])][pos[1]-i] = palabra.charAt(i);
+							}
+						}
+					} catch(Exception e){
+						//Si nos salimos de la matriz, no hay espacio
+						v = false;
+						//Restablecemos la matriz
+						matriz = copiamatriz;
+					}
+					
+				}
+				
+				if(v=false) { //Si no hay espacio, vuelve a generar una posición hasta que haya espacio
+					pos[0]=getAleatorio(0,14);
+					pos[1]=getAleatorio(0,14);
+				}
+				
+			}while(!v);
+			
+			//declarar que la posición es valida
+			posv = true;
+			
+			break;
+		case 3: //Si posición es diagonal(y)
+			
+			do {
+				v = true; //flag a positivo
+				
+				if(ori[0]==0) {//Comprobar palabra de arriba a abajo (Diagonal Y)
+					try {
+						for (int i = 0; i < palabra.length(); i++) {
+							if(matriz[(pos[0]+i)][pos[1]-i]!='-') {
+								//Espacio ocupado
+								v = false;
+							}else {
+								//Si esta libre, aprovechamos el for y colocamos la letra de la palabra
+								matriz[(pos[0]+i)][pos[1]-i] = palabra.charAt(i);
+							}
+						}
+					} catch(Exception e){
+						//Si nos salimos de la matriz, no hay espacio
+						v = false;
+						//Restablecemos la matriz
+						matriz = copiamatriz;
+					}
+				}else if(ori[0]==1){//comprobar palabra de abajo a arriba (Diagonal Y)
+					try {
+						for (int i = 0; i < palabra.length(); i++) {
+							if(matriz[(pos[0]-i)][pos[1]+i]!='-') {
+								//Espacio ocupado
+								v = false;
+							}else {
+								//Si esta libre, aprovechamos el for y colocamos la letra de la palabra
+								matriz[(pos[0]-i)][pos[1]+i] = palabra.charAt(i);
+							}
+						}
+					} catch(Exception e){
+						//Si nos salimos de la matriz, no hay espacio
+						v = false;
+						//Restablecemos la matriz
+						matriz = copiamatriz;
+					}
+					
+				}
+				
+				if(v=false) { //Si no hay espacio, vuelve a generar una posición hasta que haya espacio
+					pos[0]=getAleatorio(0,14);
+					pos[1]=getAleatorio(0,14);
+				}
+				
+			}while(!v);
+			
+			//declarar que la posición es valida
+			posv = true;
+			
+			
+			break;
+		}
+		
+		
+		//Salimos del Switch, ya sabemos que la posición actual es valida
+		//########################################
+		//La palabra ya esta colocada :D
 		
 		
 		
@@ -274,7 +529,26 @@ public class Sopa_de_Letras {
 		palabras = mayorAMenor(get10Palabras());
 		
 		
+		//Mostrar las palabras
+		System.out.println("-------------------");
+		System.out.println("Palabras Ordenadas");
+		System.out.println("-------------------");
+		for (int i = 0; i < palabras.length; i++) {
+			System.out.println(palabras[i]);
+		}
 		
+		//Colocar palabras en tablero
+		//colocarPalabra(palabras[0]); //Me falla el metodo colocar palabras
+		
+		
+		//Genera letras aleatorias en los espacios vacios
+		generarLetras();
+		
+		//Mostrar Matriz
+		System.out.println("-------------------");
+		System.out.println("Sopa de Letras");
+		System.out.println("-------------------");
+		mostrarMatriz();
 		
 		
 		
