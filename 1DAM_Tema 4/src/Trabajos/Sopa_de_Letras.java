@@ -139,7 +139,7 @@ public class Sopa_de_Letras {
 		}
 		
 		//Paso palabra a mayusculas
-		auxs.toUpperCase();
+		auxs = auxs.toUpperCase();
 		
 		//Devuelvo un String
 		return auxs;
@@ -212,7 +212,7 @@ public class Sopa_de_Letras {
 		
 		for(int i=0;i<(palabras.length-1);i++){
             for(int j=i+1;j<palabras.length;j++){
-                if(palabras[i].compareToIgnoreCase(palabras[j])<0){
+                if(palabras[i].length()<palabras[j].length()){
                     //Intercambiamos valores
                     aux=palabras[i];
                     palabras[i]=palabras[j];
@@ -254,7 +254,7 @@ public class Sopa_de_Letras {
 		
 		//Creamos una copia de la matriz para reestablecerla si hace falta
 		char[][] copiamatriz = matriz;
-		
+		/*
 		//Recorremos la segunda matriz y marcamos las palabras libres y las ocupadas
 		for (int i = 0; i < bmatriz.length; i++) {
 			for (int j = 0; j < bmatriz.length; j++) {
@@ -266,7 +266,7 @@ public class Sopa_de_Letras {
 				}
 			}
 			
-		}
+		}*/
 		
 		//Vemos donde vamos a colocar la palabra y con que orientación
 		pos[0]=getAleatorio(0,14);
@@ -280,6 +280,11 @@ public class Sopa_de_Letras {
 		//matriz[pos[0]][pos[1]];
 		//ori[0] Orientación
 		//ori[1] Posición
+		System.out.println("x: "+pos[0]);
+		System.out.println("y: "+pos[1]);
+		System.out.println("Posición Tipo: "+ori[1]);
+		System.out.println("Derecha izquierda"+ori[0]);
+		
 		
 		switch(ori[1]) {
 		case 0: //Si posición es vertical
@@ -299,10 +304,16 @@ public class Sopa_de_Letras {
 							}
 						}
 					} catch(Exception e){
+						
 						//Si nos salimos de la matriz, no hay espacio
 						v = false;
 						//Restablecemos la matriz
 						matriz = copiamatriz;
+						e.getMessage();
+						System.out.println(e.getMessage());
+						System.out.println("fuera de rango");
+						
+						
 					}
 				}else if(ori[0]==1){//comprobar palabra de abajo a arriba
 					try {
@@ -320,11 +331,13 @@ public class Sopa_de_Letras {
 						v = false;
 						//Restablecemos la matriz
 						matriz = copiamatriz;
+						System.out.println("fuera de rango");
+						e.getMessage();
 					}
 					
 				}
 				
-				if(v=false) { //Si no hay espacio, vuelve a generar una posición hasta que haya espacio
+				if(v==false) { //Si no hay espacio, vuelve a generar una posición hasta que haya espacio
 					pos[0]=getAleatorio(0,14);
 					pos[1]=getAleatorio(0,14);
 				}
@@ -356,7 +369,9 @@ public class Sopa_de_Letras {
 						//Si nos salimos de la matriz, no hay espacio
 						v = false;
 						//Restablecemos la matriz
+						System.out.println("fuera de rango");
 						matriz = copiamatriz;
+						e.getMessage();
 					}
 				}else if(ori[0]==1){//comprobar palabra de abajo a arriba (Diagonal x)
 					try {
@@ -374,11 +389,13 @@ public class Sopa_de_Letras {
 						v = false;
 						//Restablecemos la matriz
 						matriz = copiamatriz;
+						System.out.println("fuera de rango");
+						e.getMessage();
 					}
 					
 				}
 				
-				if(v=false) { //Si no hay espacio, vuelve a generar una posición hasta que haya espacio
+				if(v==false) { //Si no hay espacio, vuelve a generar una posición hasta que haya espacio
 					pos[0]=getAleatorio(0,14);
 					pos[1]=getAleatorio(0,14);
 				}
@@ -411,6 +428,8 @@ public class Sopa_de_Letras {
 						v = false;
 						//Restablecemos la matriz
 						matriz = copiamatriz;
+						System.out.println("fuera de rango");
+						e.getMessage();
 					}
 					
 				}else if(ori[0]==1){//comprobar palabra de abajo a arriba
@@ -429,11 +448,13 @@ public class Sopa_de_Letras {
 						v = false;
 						//Restablecemos la matriz
 						matriz = copiamatriz;
+						System.out.println("fuera de rango");
+						e.getMessage();
 					}
 					
 				}
 				
-				if(v=false) { //Si no hay espacio, vuelve a generar una posición hasta que haya espacio
+				if(v==false) { //Si no hay espacio, vuelve a generar una posición hasta que haya espacio
 					pos[0]=getAleatorio(0,14);
 					pos[1]=getAleatorio(0,14);
 				}
@@ -465,6 +486,8 @@ public class Sopa_de_Letras {
 						v = false;
 						//Restablecemos la matriz
 						matriz = copiamatriz;
+						System.out.println("fuera de rango");
+						e.getMessage();
 					}
 				}else if(ori[0]==1){//comprobar palabra de abajo a arriba (Diagonal Y)
 					try {
@@ -482,11 +505,13 @@ public class Sopa_de_Letras {
 						v = false;
 						//Restablecemos la matriz
 						matriz = copiamatriz;
+						System.out.println("fuera de rango");
+						e.getMessage();
 					}
 					
 				}
 				
-				if(v=false) { //Si no hay espacio, vuelve a generar una posición hasta que haya espacio
+				if(v==false) { //Si no hay espacio, vuelve a generar una posición hasta que haya espacio
 					pos[0]=getAleatorio(0,14);
 					pos[1]=getAleatorio(0,14);
 				}
@@ -538,11 +563,15 @@ public class Sopa_de_Letras {
 		}
 		
 		//Colocar palabras en tablero
-		//colocarPalabra(palabras[0]); //Me falla el metodo colocar palabras
+		
+		
+		for (int i = 0; i < palabras.length; i++) {
+			colocarPalabra(palabras[i]); //Me falla el metodo colocar palabras
+		}
 		
 		
 		//Genera letras aleatorias en los espacios vacios
-		generarLetras();
+		//generarLetras();
 		
 		//Mostrar Matriz
 		System.out.println("-------------------");
