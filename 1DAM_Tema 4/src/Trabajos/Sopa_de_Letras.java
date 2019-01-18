@@ -28,7 +28,7 @@ public class Sopa_de_Letras {
 	public static char matriz[][] = new char[15][15];
 	//Matriz segundaria de validación
 	public static boolean bmatriz[][] = new boolean[15][15];
-
+	final static int M = 10;
 	
 	
 	
@@ -168,16 +168,16 @@ public class Sopa_de_Letras {
 		 * Metodo que devuelve un vector de String con 10 palabras sin repetir
 		 * 
 		 * */
-		
+		//Variables globales
+		String[] auxsa = new String [M];
 		
 		//Variables Locales
 		int aux = 0; //Variable auxiliar que almacena un valor entero
 		boolean v = false; //Flag que marca si el valor es valido o no
 		String auxs = "-"; //Variable auxiliar que almacena un strings
-		String[] auxsa = {"-","-","-","-","-","-","-","-","-","-"}; //Variable auxiliar que almacena un strings
 		char caracter; //Varibale auxiliar que almacena un caracter
 		
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < M; i++) {
 			
 			do {
 				//Pongo el flag del while a true
@@ -253,7 +253,27 @@ public class Sopa_de_Letras {
 		
 		
 		//Creamos una copia de la matriz para reestablecerla si hace falta
-		char[][] copiamatriz = matriz;
+		char[][] copiamatriz = new char[15][15];
+		
+		//Copias la matriz
+		for(int a=0;a<15;a++) {
+			for(int b=0;b<15;b++)
+				copiamatriz[a][b] = matriz[a][b];
+		}
+		/*
+		System.out.println("matriz");
+		for(int a=0;a<15;a++) {
+			for(int b=0;b<15;b++)
+				System.out.print(matriz[a][b] + " ");
+			System.out.println();
+		}
+		System.out.println("copia");
+		for(int a=0;a<15;a++) {
+			for(int b=0;b<15;b++)
+				System.out.print(copiamatriz[a][b] + " ");
+			System.out.println();
+		}*/
+		
 		/*
 		//Recorremos la segunda matriz y marcamos las palabras libres y las ocupadas
 		for (int i = 0; i < bmatriz.length; i++) {
@@ -307,11 +327,29 @@ public class Sopa_de_Letras {
 						
 						//Si nos salimos de la matriz, no hay espacio
 						v = false;
+						/*
+						System.out.println("matriz 0");
+						for(int a=0;a<15;a++) {
+							for(int b=0;b<15;b++)
+								System.out.print(matriz[a][b] + " ");
+							System.out.println();
+						}
+						System.out.println("copia");
+						for(int a=0;a<15;a++) {
+							for(int b=0;b<15;b++)
+								System.out.print(copiamatriz[a][b] + " ");
+							System.out.println();
+						}*/
+						
 						//Restablecemos la matriz
-						matriz = copiamatriz;
-						e.getMessage();
+						for(int a=0;a<15;a++) {
+							for(int b=0;b<15;b++)
+								matriz[a][b] = copiamatriz[a][b];
+						}
+						
+						
 						System.out.println(e.getMessage());
-						System.out.println("fuera de rango");
+						System.out.println("fuera de rango 1");
 						
 						
 					}
@@ -329,10 +367,27 @@ public class Sopa_de_Letras {
 					} catch(Exception e){
 						//Si nos salimos de la matriz, no hay espacio
 						v = false;
+						/*
+						System.out.println("matriz 1");
+						for(int a=0;a<15;a++) {
+							for(int b=0;b<15;b++)
+								System.out.print(matriz[a][b] + " ");
+							System.out.println();
+						}
+						System.out.println("copia");
+						for(int a=0;a<15;a++) {
+							for(int b=0;b<15;b++)
+								System.out.print(copiamatriz[a][b] + " ");
+							System.out.println();
+						}
+						*/
 						//Restablecemos la matriz
-						matriz = copiamatriz;
+						for(int a=0;a<15;a++) {
+							for(int b=0;b<15;b++)
+								matriz[a][b] = copiamatriz[a][b];
+						}
+						System.out.println(e.getMessage());
 						System.out.println("fuera de rango");
-						e.getMessage();
 					}
 					
 				}
@@ -369,9 +424,15 @@ public class Sopa_de_Letras {
 						//Si nos salimos de la matriz, no hay espacio
 						v = false;
 						//Restablecemos la matriz
+						System.out.println(e.getMessage());
 						System.out.println("fuera de rango");
-						matriz = copiamatriz;
-						e.getMessage();
+
+						//Restablecemos la matriz
+						for(int a=0;a<15;a++) {
+							for(int b=0;b<15;b++)
+								matriz[a][b] = copiamatriz[a][b];
+						}
+						
 					}
 				}else if(ori[0]==1){//comprobar palabra de abajo a arriba (Diagonal x)
 					try {
@@ -388,7 +449,12 @@ public class Sopa_de_Letras {
 						//Si nos salimos de la matriz, no hay espacio
 						v = false;
 						//Restablecemos la matriz
-						matriz = copiamatriz;
+						//Restablecemos la matriz
+						for(int a=0;a<15;a++) {
+							for(int b=0;b<15;b++)
+								matriz[a][b] = copiamatriz[a][b];
+						}
+						System.out.println(e.getMessage());
 						System.out.println("fuera de rango");
 						e.getMessage();
 					}
@@ -427,7 +493,12 @@ public class Sopa_de_Letras {
 						//Si nos salimos de la matriz, no hay espacio
 						v = false;
 						//Restablecemos la matriz
-						matriz = copiamatriz;
+						//Restablecemos la matriz
+						for(int a=0;a<15;a++) {
+							for(int b=0;b<15;b++)
+								matriz[a][b] = copiamatriz[a][b];
+						}
+						System.out.println(e.getMessage());
 						System.out.println("fuera de rango");
 						e.getMessage();
 					}
@@ -447,7 +518,12 @@ public class Sopa_de_Letras {
 						//Si nos salimos de la matriz, no hay espacio
 						v = false;
 						//Restablecemos la matriz
-						matriz = copiamatriz;
+						//Restablecemos la matriz
+						for(int a=0;a<15;a++) {
+							for(int b=0;b<15;b++)
+								matriz[a][b] = copiamatriz[a][b];
+						}
+						System.out.println(e.getMessage());
 						System.out.println("fuera de rango");
 						e.getMessage();
 					}
@@ -485,7 +561,12 @@ public class Sopa_de_Letras {
 						//Si nos salimos de la matriz, no hay espacio
 						v = false;
 						//Restablecemos la matriz
-						matriz = copiamatriz;
+						//Restablecemos la matriz
+						for(int a=0;a<15;a++) {
+							for(int b=0;b<15;b++)
+								matriz[a][b] = copiamatriz[a][b];
+						}
+						System.out.println(e.getMessage());
 						System.out.println("fuera de rango");
 						e.getMessage();
 					}
@@ -504,7 +585,11 @@ public class Sopa_de_Letras {
 						//Si nos salimos de la matriz, no hay espacio
 						v = false;
 						//Restablecemos la matriz
-						matriz = copiamatriz;
+						for(int a=0;a<15;a++) {
+							for(int b=0;b<15;b++)
+								matriz[a][b] = copiamatriz[a][b];
+						}
+						System.out.println(e.getMessage());
 						System.out.println("fuera de rango");
 						e.getMessage();
 					}
@@ -537,11 +622,6 @@ public class Sopa_de_Letras {
 	//Metodo que contiene el flujo del juego
 	public static void juego() {
 		
-		//Variables globales
-		String[] palabras = new String [10];
-		
-		
-		
 		//recorrer la matriz con valor "nulo"(-)
 		for (int i = 0; i < matriz.length; i++) {
 			for (int j = 0; j < matriz.length; j++) {
@@ -551,13 +631,14 @@ public class Sopa_de_Letras {
 		
 		
 		//Pedir y guardar las 10 palabras de forma ordenada (Las más grande primero)
-		palabras = mayorAMenor(get10Palabras());
+		String[] palabras = mayorAMenor(get10Palabras());
 		
 		
 		//Mostrar las palabras
 		System.out.println("-------------------");
 		System.out.println("Palabras Ordenadas");
 		System.out.println("-------------------");
+		System.out.println(palabras.length);
 		for (int i = 0; i < palabras.length; i++) {
 			System.out.println(palabras[i]);
 		}
