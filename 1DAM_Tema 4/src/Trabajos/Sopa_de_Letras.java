@@ -1,18 +1,15 @@
 package Trabajos;
 
 import java.util.Scanner;
-import java.io.EOFException;
-import java.util.HashSet;
-import java.util.InputMismatchException;
-import java.util.Set;
-
 /***
  * Programa: Sopa_de_Letras
  * 
+ * El programa solo debe pedir 10 palabras y colocarlas en una sopa de letras
+ * La sopa de letras tiene un tamaño de 15 x 15 (matriz)
  *           
  * Autor: Pedro Daniel Pérez Sánchez
  *
- * Fecha: 08/01/2019
+ * Fecha: 18/01/2019
  *
  * Materia: Programción
  *
@@ -26,8 +23,7 @@ public class Sopa_de_Letras {
 	//Atributos Globales
 	//Matriz con los valores de la sopa de letras
 	public static char matriz[][] = new char[15][15];
-	//Matriz segundaria de validación
-	public static boolean bmatriz[][] = new boolean[15][15];
+	//Atributo global que define las palabras que se piden por pantalla
 	final static int M = 10;
 	
 	
@@ -45,7 +41,7 @@ public class Sopa_de_Letras {
 		
 	}
 	
-	//Metodo para crear letras aleatorias 
+	//Metodo para rellenar la matriz de letras aleatorias 
 	public static void generarLetras() {
 		//Mostrar Matriz en consola
 		for (int i = 0; i < matriz.length; i++) {
@@ -65,6 +61,8 @@ public class Sopa_de_Letras {
 		 * Parametro 1: Metodo devuelve un numero dado por el usuario
 		 * en el rango [1-4], lo uso para la opción del menu
 		 * 
+		 * Parametro 2: Devuelve la siguiente palabra introducida por el usuario
+		 * 
 		 * El metodo muestra por pantalla el texto que le pasemos 
 		 * devuelve un string con la salida validada según el parametro pasado
 		 * 
@@ -75,7 +73,6 @@ public class Sopa_de_Letras {
 		String auxs = "-"; //Variable auxiliar que almacena un strings
 		int aux = 0; //Variable auxiliar que almacena un valor entero
 		boolean v = false; //Flag que marca si el valor es valido o no
-		char caracter; //Varibale auxiliar que almacena un caracter
 		
 		//Declaro el objeto Scanner
 		Scanner t = new Scanner(System.in);
@@ -125,6 +122,17 @@ public class Sopa_de_Letras {
 						System.out.println("Debes introducir una palabra entre 3 y 15 caracteres");
 						v=false;
 					}
+					//Si hay un numero, lo volvemos a pedir
+					for (int i = 0; i < auxs.length(); i++) {
+						if((auxs.charAt(i)>=48)&&(auxs.charAt(i)<=57)) {
+							i=auxs.length();
+							System.out.println("Debes introducir una palabra entre 3 y 15 caracteres, no numeros");
+							v=false;
+							
+						}
+					}
+					
+					
 				}
 				catch(Exception e){
 					System.out.println("¡La palabra introducida no es valida!");
@@ -172,11 +180,9 @@ public class Sopa_de_Letras {
 		String[] auxsa = new String [M];
 		
 		//Variables Locales
-		int aux = 0; //Variable auxiliar que almacena un valor entero
 		boolean v = false; //Flag que marca si el valor es valido o no
-		String auxs = "-"; //Variable auxiliar que almacena un strings
-		char caracter; //Varibale auxiliar que almacena un caracter
 		
+		//flujo del metodo, pido las palabras M veces (por defecto 10)
 		for (int i = 0; i < M; i++) {
 			
 			do {
@@ -245,11 +251,16 @@ public class Sopa_de_Letras {
 	//Metodo que coloca la palabra que le pasemos
 	public static void colocarPalabra(String palabra) {
 		
+		/*
+		 * Metodo que coloca una palabra en una ubicación aleatoria,
+		 * con una orientación aleatoria y una posición aleatoria
+		 * 
+		 * */
+		
 		//variables locales
 		int[] pos = new int [2]; //Almacena posicion
 		int[] ori; //Almacena orientación
 		boolean v = true; //flag auxiliar
-		boolean posv = false; //flag posición valida
 		
 		
 		//Creamos una copia de la matriz para reestablecerla si hace falta
@@ -260,33 +271,6 @@ public class Sopa_de_Letras {
 			for(int b=0;b<15;b++)
 				copiamatriz[a][b] = matriz[a][b];
 		}
-		/*
-		System.out.println("matriz");
-		for(int a=0;a<15;a++) {
-			for(int b=0;b<15;b++)
-				System.out.print(matriz[a][b] + " ");
-			System.out.println();
-		}
-		System.out.println("copia");
-		for(int a=0;a<15;a++) {
-			for(int b=0;b<15;b++)
-				System.out.print(copiamatriz[a][b] + " ");
-			System.out.println();
-		}*/
-		
-		/*
-		//Recorremos la segunda matriz y marcamos las palabras libres y las ocupadas
-		for (int i = 0; i < bmatriz.length; i++) {
-			for (int j = 0; j < bmatriz.length; j++) {
-				if (matriz[i][j]=='-') {
-					//Si la cuadricula esta vacia, entonces no estara ocupada
-					bmatriz[i][j]=false;
-				}else {//Si la matriz tiene algo, entonces estara ocupada
-					bmatriz[i][j]=true;
-				}
-			}
-			
-		}*/
 		
 		//Vemos donde vamos a colocar la palabra y con que orientación
 		pos[0]=getAleatorio(0,14);
@@ -295,15 +279,10 @@ public class Sopa_de_Letras {
 		//ori[1] = Decidir posición, 0 vertical, 1 diagonal(X), 2 horizontal, 3 diagonal(Y)
 		ori = orientación();
 		
-		//Comprobamos si hay espacio para colocar nuestra palabra
-		int espaciolibre;
+		
 		//matriz[pos[0]][pos[1]];
 		//ori[0] Orientación
 		//ori[1] Posición
-		System.out.println("x: "+pos[0]);
-		System.out.println("y: "+pos[1]);
-		System.out.println("Posición Tipo: "+ori[1]);
-		System.out.println("Derecha izquierda"+ori[0]);
 		
 		
 		switch(ori[1]) {
@@ -318,6 +297,11 @@ public class Sopa_de_Letras {
 							if(matriz[(pos[0]+i)][pos[1]]!='-') {
 								//Espacio ocupado
 								v = false;
+								//Restablecemos la matriz
+								for(int a=0;a<15;a++) {
+									for(int b=0;b<15;b++)
+										matriz[a][b] = copiamatriz[a][b];
+								}
 							}else {
 								//Si esta libre, aprovechamos el for y colocamos la letra de la palabra
 								matriz[(pos[0]+i)][pos[1]] = palabra.charAt(i);
@@ -327,30 +311,12 @@ public class Sopa_de_Letras {
 						
 						//Si nos salimos de la matriz, no hay espacio
 						v = false;
-						/*
-						System.out.println("matriz 0");
-						for(int a=0;a<15;a++) {
-							for(int b=0;b<15;b++)
-								System.out.print(matriz[a][b] + " ");
-							System.out.println();
-						}
-						System.out.println("copia");
-						for(int a=0;a<15;a++) {
-							for(int b=0;b<15;b++)
-								System.out.print(copiamatriz[a][b] + " ");
-							System.out.println();
-						}*/
 						
 						//Restablecemos la matriz
 						for(int a=0;a<15;a++) {
 							for(int b=0;b<15;b++)
 								matriz[a][b] = copiamatriz[a][b];
 						}
-						
-						
-						System.out.println(e.getMessage());
-						System.out.println("fuera de rango 1");
-						
 						
 					}
 				}else if(ori[0]==1){//comprobar palabra de abajo a arriba
@@ -359,6 +325,11 @@ public class Sopa_de_Letras {
 							if(matriz[(pos[0]-i)][pos[1]]!='-') {
 								//Espacio ocupado
 								v = false;
+								//Restablecemos la matriz
+								for(int a=0;a<15;a++) {
+									for(int b=0;b<15;b++)
+										matriz[a][b] = copiamatriz[a][b];
+								}
 							}else {
 								//Si esta libre, aprovechamos el for y colocamos la letra de la palabra
 								matriz[(pos[0]-i)][pos[1]] = palabra.charAt(i);
@@ -367,27 +338,12 @@ public class Sopa_de_Letras {
 					} catch(Exception e){
 						//Si nos salimos de la matriz, no hay espacio
 						v = false;
-						/*
-						System.out.println("matriz 1");
-						for(int a=0;a<15;a++) {
-							for(int b=0;b<15;b++)
-								System.out.print(matriz[a][b] + " ");
-							System.out.println();
-						}
-						System.out.println("copia");
-						for(int a=0;a<15;a++) {
-							for(int b=0;b<15;b++)
-								System.out.print(copiamatriz[a][b] + " ");
-							System.out.println();
-						}
-						*/
+						
 						//Restablecemos la matriz
 						for(int a=0;a<15;a++) {
 							for(int b=0;b<15;b++)
 								matriz[a][b] = copiamatriz[a][b];
 						}
-						System.out.println(e.getMessage());
-						System.out.println("fuera de rango");
 					}
 					
 				}
@@ -399,8 +355,6 @@ public class Sopa_de_Letras {
 				
 			}while(!v);
 			
-			//declarar que la posición es valida
-			posv = true;
 			
 			break;
 		case 1: //Si posición es diagonal(x)
@@ -414,6 +368,11 @@ public class Sopa_de_Letras {
 							if(matriz[(pos[0]+i)][pos[1]+i]!='-') {
 								//Espacio ocupado
 								v = false;
+								//Restablecemos la matriz
+								for(int a=0;a<15;a++) {
+									for(int b=0;b<15;b++)
+										matriz[a][b] = copiamatriz[a][b];
+								}
 							}else {
 								//Si esta libre, aprovechamos el for y colocamos la letra de la palabra
 								matriz[(pos[0]+i)][pos[1]+i] = palabra.charAt(i);
@@ -423,9 +382,6 @@ public class Sopa_de_Letras {
 					} catch(Exception e){
 						//Si nos salimos de la matriz, no hay espacio
 						v = false;
-						//Restablecemos la matriz
-						System.out.println(e.getMessage());
-						System.out.println("fuera de rango");
 
 						//Restablecemos la matriz
 						for(int a=0;a<15;a++) {
@@ -440,6 +396,11 @@ public class Sopa_de_Letras {
 							if(matriz[(pos[0]-i)][pos[1]-i]!='-') {
 								//Espacio ocupado
 								v = false;
+								//Restablecemos la matriz
+								for(int a=0;a<15;a++) {
+									for(int b=0;b<15;b++)
+										matriz[a][b] = copiamatriz[a][b];
+								}
 							}else {
 								//Si esta libre, aprovechamos el for y colocamos la letra de la palabra
 								matriz[(pos[0]-i)][pos[1]-i] = palabra.charAt(i);
@@ -449,14 +410,10 @@ public class Sopa_de_Letras {
 						//Si nos salimos de la matriz, no hay espacio
 						v = false;
 						//Restablecemos la matriz
-						//Restablecemos la matriz
 						for(int a=0;a<15;a++) {
 							for(int b=0;b<15;b++)
 								matriz[a][b] = copiamatriz[a][b];
 						}
-						System.out.println(e.getMessage());
-						System.out.println("fuera de rango");
-						e.getMessage();
 					}
 					
 				}
@@ -468,8 +425,6 @@ public class Sopa_de_Letras {
 				
 			}while(!v);
 			
-			//declarar que la posición es valida
-			posv = true;
 			
 			
 			break;
@@ -484,6 +439,11 @@ public class Sopa_de_Letras {
 							if(matriz[(pos[0])][pos[1]+i]!='-') {
 								//Espacio ocupado
 								v = false;
+								//Restablecemos la matriz
+								for(int a=0;a<15;a++) {
+									for(int b=0;b<15;b++)
+										matriz[a][b] = copiamatriz[a][b];
+								}
 							}else {
 								//Si esta libre, aprovechamos el for y colocamos la letra de la palabra
 								matriz[(pos[0])][pos[1]+i] = palabra.charAt(i);
@@ -493,14 +453,11 @@ public class Sopa_de_Letras {
 						//Si nos salimos de la matriz, no hay espacio
 						v = false;
 						//Restablecemos la matriz
-						//Restablecemos la matriz
 						for(int a=0;a<15;a++) {
 							for(int b=0;b<15;b++)
 								matriz[a][b] = copiamatriz[a][b];
 						}
-						System.out.println(e.getMessage());
-						System.out.println("fuera de rango");
-						e.getMessage();
+						
 					}
 					
 				}else if(ori[0]==1){//comprobar palabra de abajo a arriba
@@ -509,6 +466,11 @@ public class Sopa_de_Letras {
 							if(matriz[(pos[0])][pos[1]-i]!='-') {
 								//Espacio ocupado
 								v = false;
+								//Restablecemos la matriz
+								for(int a=0;a<15;a++) {
+									for(int b=0;b<15;b++)
+										matriz[a][b] = copiamatriz[a][b];
+								}
 							}else {
 								//Si esta libre, aprovechamos el for y colocamos la letra de la palabra
 								matriz[(pos[0])][pos[1]-i] = palabra.charAt(i);
@@ -518,14 +480,11 @@ public class Sopa_de_Letras {
 						//Si nos salimos de la matriz, no hay espacio
 						v = false;
 						//Restablecemos la matriz
-						//Restablecemos la matriz
 						for(int a=0;a<15;a++) {
 							for(int b=0;b<15;b++)
 								matriz[a][b] = copiamatriz[a][b];
 						}
-						System.out.println(e.getMessage());
-						System.out.println("fuera de rango");
-						e.getMessage();
+						
 					}
 					
 				}
@@ -537,8 +496,6 @@ public class Sopa_de_Letras {
 				
 			}while(!v);
 			
-			//declarar que la posición es valida
-			posv = true;
 			
 			break;
 		case 3: //Si posición es diagonal(y)
@@ -552,6 +509,11 @@ public class Sopa_de_Letras {
 							if(matriz[(pos[0]+i)][pos[1]-i]!='-') {
 								//Espacio ocupado
 								v = false;
+								//Restablecemos la matriz
+								for(int a=0;a<15;a++) {
+									for(int b=0;b<15;b++)
+										matriz[a][b] = copiamatriz[a][b];
+								}
 							}else {
 								//Si esta libre, aprovechamos el for y colocamos la letra de la palabra
 								matriz[(pos[0]+i)][pos[1]-i] = palabra.charAt(i);
@@ -561,14 +523,11 @@ public class Sopa_de_Letras {
 						//Si nos salimos de la matriz, no hay espacio
 						v = false;
 						//Restablecemos la matriz
-						//Restablecemos la matriz
 						for(int a=0;a<15;a++) {
 							for(int b=0;b<15;b++)
 								matriz[a][b] = copiamatriz[a][b];
 						}
-						System.out.println(e.getMessage());
-						System.out.println("fuera de rango");
-						e.getMessage();
+						
 					}
 				}else if(ori[0]==1){//comprobar palabra de abajo a arriba (Diagonal Y)
 					try {
@@ -576,6 +535,11 @@ public class Sopa_de_Letras {
 							if(matriz[(pos[0]-i)][pos[1]+i]!='-') {
 								//Espacio ocupado
 								v = false;
+								//Restablecemos la matriz
+								for(int a=0;a<15;a++) {
+									for(int b=0;b<15;b++)
+										matriz[a][b] = copiamatriz[a][b];
+								}
 							}else {
 								//Si esta libre, aprovechamos el for y colocamos la letra de la palabra
 								matriz[(pos[0]-i)][pos[1]+i] = palabra.charAt(i);
@@ -589,9 +553,7 @@ public class Sopa_de_Letras {
 							for(int b=0;b<15;b++)
 								matriz[a][b] = copiamatriz[a][b];
 						}
-						System.out.println(e.getMessage());
-						System.out.println("fuera de rango");
-						e.getMessage();
+						
 					}
 					
 				}
@@ -602,9 +564,6 @@ public class Sopa_de_Letras {
 				}
 				
 			}while(!v);
-			
-			//declarar que la posición es valida
-			posv = true;
 			
 			
 			break;
@@ -638,7 +597,6 @@ public class Sopa_de_Letras {
 		System.out.println("-------------------");
 		System.out.println("Palabras Ordenadas");
 		System.out.println("-------------------");
-		System.out.println(palabras.length);
 		for (int i = 0; i < palabras.length; i++) {
 			System.out.println(palabras[i]);
 		}
@@ -652,7 +610,7 @@ public class Sopa_de_Letras {
 		
 		
 		//Genera letras aleatorias en los espacios vacios
-		//generarLetras();
+		generarLetras();
 		
 		//Mostrar Matriz
 		System.out.println("-------------------");
@@ -678,10 +636,7 @@ public class Sopa_de_Letras {
 		
 		// DECLARACIÓN DE VARIABLES DE CABECERA 
 		int aux = 0; //Variable local que almacena posición del menu
-		String auxs; //Variable local que almacena un String
-		String[] auxsa; //Variable local que almacena un vector de Strings
-		int[] auxa; //Variable local que almacena un array
-		boolean v = true;//Flag
+		String auxs; //Variable local que almacena un Strins
 		
 		
 		// CABECERA DEL PROGRAMA 
@@ -689,7 +644,7 @@ public class Sopa_de_Letras {
 		System.out.println("|                                     |");
 		System.out.println("|       Programa: Sopa de Letras      |");
 		System.out.println("|                                     |");
-		System.out.println("|  17/01/2019            By Zoroboak  |");
+		System.out.println("|  19/01/2019            By Zoroboak  |");
 		System.out.println("+-------------------------------------+");
 				
 		
@@ -718,6 +673,8 @@ public class Sopa_de_Letras {
 				break;
 			case 2: //2.- Nivel de Dificultad 
 				
+				System.out.println("Nivel de Dificultad: 1");
+				System.out.println("Nota: En proximas actualizaciones habrá más niveles ^^ ");
 			
 				break;
 			case 3: //3.- Sobre el juego    
