@@ -24,7 +24,7 @@ public class Sopa_de_Letras {
 	//Matriz con los valores de la sopa de letras
 	public static char matriz[][] = new char[15][15];
 	//Atributo global que define las palabras que se piden por pantalla
-	final static int M = 10;
+	public static int M = 10;
 	
 	
 	
@@ -579,7 +579,7 @@ public class Sopa_de_Letras {
 	}
 	
 	//Metodo que contiene el flujo del juego
-	public static void juego() {
+	public static void juego(String[] args) {
 		
 		//recorrer la matriz con valor "nulo"(-)
 		for (int i = 0; i < matriz.length; i++) {
@@ -606,6 +606,17 @@ public class Sopa_de_Letras {
 		
 		for (int i = 0; i < palabras.length; i++) {
 			colocarPalabra(palabras[i]); //Me falla el metodo colocar palabras
+		}
+		// ######## TEST ######## Coloco palabras pasadas como argumentos
+		if(args.length > 0){
+			try {
+				for (int i = 0; i < args.length; i++) {
+					colocarPalabra(args[i].toUpperCase());
+				}
+			}catch(Exception e) {
+				System.out.println("Ha Pasado algo");
+				System.out.println(e);
+			}
 		}
 		
 		
@@ -639,6 +650,12 @@ public class Sopa_de_Letras {
 		String auxs; //Variable local que almacena un Strins
 		
 		
+		//### TEST ### si hay argumentos, pedimos menos palabras
+		if(args.length > 0) {
+			M=M-args.length;			
+		}
+		
+		
 		// CABECERA DEL PROGRAMA 
 		System.out.println("+-------------------------------------+");
 		System.out.println("|                                     |");
@@ -667,7 +684,7 @@ public class Sopa_de_Letras {
 			switch(aux) {
 			case 1: //1.- Iniciar Juego 
 				
-				juego();
+				juego(args);
 				
 				
 				break;
