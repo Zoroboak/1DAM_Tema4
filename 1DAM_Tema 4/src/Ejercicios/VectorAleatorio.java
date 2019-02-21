@@ -45,99 +45,99 @@ public class VectorAleatorio {
 	}
 	
 	//Metodo: generar un vector con n valores aleatorios
-		public static int[] getAleatorio(int n) {
-			/*
-			 * n = numero de valores que queremos generar
-			 * 
-			 * el metodo devuelve el vector v con los valores generados
-			 * 
-			 * */
-			
-			int[] v = new int[n];	
-			for (int i = 0; i < 20; i++) {
-				v[i] = (int)((Math.random()*100/*Rango*/)+1/*Minimo*/);
-				System.out.print(" "+v[i]);
-			}
-			return v;
+	public static int[] getAleatorio(int n) {
+		/*
+		 * n = numero de valores que queremos generar
+		 * 
+		 * el metodo devuelve el vector v con los valores generados
+		 * 
+		 * */
+		
+		int[] v = new int[n];	
+		for (int i = 0; i < 20; i++) {
+			v[i] = (int)((Math.random()*100/*Rango*/)+1/*Minimo*/);
+			System.out.print(" "+v[i]);
 		}
-		
-		/*Metodo: mostrar los valores del vector que se encuentren en el rango*/
-		public static void mostrarEnRangoConPosición(int n, int m, int[] v) {
-			/*
-			 * n = Valor Rango Inferior 
-			 * m = Valor Rango Superior
-			 * 
-			 * v = Vector que se quiere comparar
-			 * 
-			 * El metodo no devuelve nada dado que solo queremos mostrar en consola
-			 * 
-			 * */
-			System.out.println("Valor\tPosición");
-			for (int i = 0; i < v.length; i++) {
-				if ((v[i]>n)&&(v[i]<m)) {
-					System.out.println(v[i]+"\t"+(i+1));
-				}
-				
-			}			
-		}
-		
-		//metodo burbuja para ordenadar los valores de un vector
-		public static int[] ordenarVector(int[] v) {
-			
-		     int i;
-		     boolean flag = true;
-		     int temp;
-		     int cont=0;
-		     do{
-		         flag = false;   
-		         for( i=0; i<((v.length -1)-cont); i++){
-		            if (v[i]>v[i+1]){
-					  temp = v[i];
-					  v[i] = v[i+1];
-					  v[i+1] = temp;
-					  flag = true; 
-		             } 
-		            
-		         }
-		         cont++;
-		     }while (flag);
-		     return v;
-		  }
-		
-		//metodo para mostrar todos los valores de un vector en pantalla
-		public static void mostrarVector(int[] v) {
-			
-			for (int i = 0; i < v.length; i++) {
-				System.out.print(v[i]+" ");
-			}
-		}
-		
-		//Metodo: Comprobar si un valor introducido esta dentro del vector introducido
-		public static boolean comprobarValor(int valor, int[] v) {
-			
-			System.out.println("Busqueda con for");
-			
-			boolean vof=false; // boolenada que nos dice si el valor fue encontrado o no
-			int cont=0; //contador local
-			int veces=0;
-			for (int i = 0; i < v.length; i++) {
-				if (v[i]==valor) {
-					vof=true;
-					cont++;
-				}
-				veces++;
+		return v;
+	}
+	
+	/*Metodo: mostrar los valores del vector que se encuentren en el rango*/
+	public static void mostrarEnRangoConPosición(int n, int m, int[] v) {
+		/*
+		 * n = Valor Rango Inferior 
+		 * m = Valor Rango Superior
+		 * 
+		 * v = Vector que se quiere comparar
+		 * 
+		 * El metodo no devuelve nada dado que solo queremos mostrar en consola
+		 * 
+		 * */
+		System.out.println("Valor\tPosición");
+		for (int i = 0; i < v.length; i++) {
+			if ((v[i]>n)&&(v[i]<m)) {
+				System.out.println(v[i]+"\t"+(i+1));
 			}
 			
-			if (vof) {
-				System.out.println("El valor "+valor+" se encuentra dentro del vector "+cont+" veces");
-			} else {
-				System.out.println("El valor "+valor+" NO se encuentra dentro del vector");
-			}
-			
-			System.out.println("Ciclos del for: "+veces);
-			
-			return vof;
+		}			
+	}
+	
+	//metodo burbuja para ordenadar los valores de un vector
+	public static int[] ordenarVector(int[] v) {
+		
+	     int i;
+	     boolean flag = true;
+	     int temp;
+	     int cont=0;
+	     do{
+	         flag = false;   
+	         for( i=0; i<((v.length -1)-cont); i++){
+	            if (v[i]>v[i+1]){
+				  temp = v[i];
+				  v[i] = v[i+1];
+				  v[i+1] = temp;
+				  flag = true; 
+	             } 
+	            
+	         }
+	         cont++;
+	     }while (flag);
+	     return v;
+	  }
+	
+	//metodo para mostrar todos los valores de un vector en pantalla
+	public static void mostrarVector(int[] v) {
+		
+		for (int i = 0; i < v.length; i++) {
+			System.out.print(v[i]+" ");
 		}
+	}
+	
+	//Metodo: Comprobar si un valor introducido esta dentro del vector introducido
+	public static boolean comprobarValor(int valor, int[] v) {
+		
+		System.out.println("Busqueda con for");
+		
+		boolean vof=false; // boolenada que nos dice si el valor fue encontrado o no
+		int cont=0; //contador local
+		int veces=0;
+		for (int i = 0; i < v.length; i++) {
+			if (v[i]==valor) {
+				vof=true;
+				cont++;
+			}
+			veces++;
+		}
+		
+		if (vof) {
+			System.out.println("El valor "+valor+" se encuentra dentro del vector "+cont+" veces");
+		} else {
+			System.out.println("El valor "+valor+" NO se encuentra dentro del vector");
+		}
+		
+		System.out.println("Ciclos del for: "+veces);
+		
+		return vof;
+	}
 		
 	
 	/* MÉTODO PRINCIPAL A EJECUTAR */
