@@ -73,7 +73,7 @@ public class principal {
 		
 		System.out.println("Hay "+ganadores+" Ganadores");
 		
-		//-----8: Mostrar el sorteo con los boletos vendidos y los ganadores.
+		//-----8: Mostrar el sorteo con los boletos vendidos y los ganadores.s
 	}
 
 }
